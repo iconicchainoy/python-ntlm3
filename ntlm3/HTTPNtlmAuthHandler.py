@@ -71,6 +71,9 @@ class AbstractNtlmAuthHandler:
             else:
                 h = HTTPConnection(host)  # will parse host:port
 
+            if not req.origin_req_host in host:
+                h.set_tunnel(req.origin_req_host)
+
             h.set_debuglevel(self._debuglevel)
 
             # we must keep the connection because NTLM authenticates the connection, not single requests
